@@ -157,8 +157,9 @@ class mainWindow:
         l1.grid (row=0, column=0)
         dirName.grid (row=0, column=1)
 
-    def rm(self):
-        pass
+    def rm(self, window, ipFrame, opFrame, closeButton, applyButton):
+       pass
+
 
     def rm_r(self):
         pass
