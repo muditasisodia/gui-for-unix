@@ -5,7 +5,7 @@
 
 
 from tkinter import *
-
+from subprocess import call
 
 class mainWindow:
     def __init__(self, root):
@@ -119,104 +119,104 @@ class mainWindow:
         closeButton.grid(row=2, column=1)
 
         if (x == 1): #createfile
-            applyButton = Button(ipFrame, text="Create", command=self.prayag)
+            applyButton = Button(ipFrame, text="Create", command=self.prayagCreateFile)
             applyButton.grid(row=2, column=0)
             self.catcreatefile(window, ipFrame, closeButton, applyButton)
 
         if (x == 2): #mkdir
-            applyButton = Button(ipFrame, text="Apply", command=self.prayag)
+            applyButton = Button(ipFrame, text="Apply", command=self.prayagMkdir)
             applyButton.grid(row=2, column=0)
             self.mkdir(window, ipFrame, closeButton, applyButton)
 
         if(x ==3 ): #rm
-            applyButton = Button(ipFrame, text="Delete", command=self.prayag)
+            applyButton = Button(ipFrame, text="Delete", command=self.prayagRm)
             applyButton.grid(row=2,column=0)
             self.rm(window, ipFrame, closeButton, applyButton)
 
         if(x == 4): #rmr
-            applyButton = Button(ipFrame, text="Delete", command=self.prayag)
+            applyButton = Button(ipFrame, text="Delete", command=self.prayagRmr)
             applyButton.grid(row=2, column=0)
             self.rm_r(window, ipFrame, closeButton, applyButton)
 
         if(x==12): #View catfilecontent
-            applyButton = Button(ipFrame, text="View Content", command=self.prayag)
+            applyButton = Button(ipFrame, text="View Content", command=self.prayagFileContent)
             applyButton.grid(row=2, column=0)
             self.catfilecontent(window, ipFrame, closeButton, applyButton)
 
         if(x==14): #head i.e. first 10 lines
-            applyButton = Button(ipFrame, text="View lines", command=self.prayag)
+            applyButton = Button(ipFrame, text="View lines", command=self.prayagFirstTen)
             applyButton.grid(row=2, column=0)
             self.head(window, ipFrame, closeButton, applyButton)
 
         if(x==15): #tail i.e. last 10 lines
-            applyButton = Button(ipFrame, text="View lines", command=self.prayag)
+            applyButton = Button(ipFrame, text="View lines", command=self.prayagLastTen)
             applyButton.grid(row=2, column=0)
             self.tail(window, ipFrame, closeButton, applyButton)
 
         if(x==16): #copy
-            applyButton = Button(ipFrame, text="Copy", command=self.prayag)
+            applyButton = Button(ipFrame, text="Copy", command=self.prayagCopy)
             applyButton.grid(row=2, column=0)
             self.copy(window, ipFrame, closeButton, applyButton)
 
         if(x==17): #sort in ascending order
-            applyButton = Button(ipFrame, text="Sort", command=self.prayag)
+            applyButton = Button(ipFrame, text="Sort", command=self.prayagSortAsce)
             applyButton.grid(row=2, column=0)
             self.sort(window, ipFrame, closeButton, applyButton)
 
         if(x==18): #wc
-            applyButton = Button(ipFrame, text="View Count", command=self.prayag)
+            applyButton = Button(ipFrame, text="View Count", command=self.prayagWc)
             applyButton.grid(row=2, column=0)
             self.wc(window, ipFrame, closeButton, applyButton)
 
         if(x==19): #longest line
-            applyButton = Button(ipFrame, text="View Longest Line", command=self.prayag)
+            applyButton = Button(ipFrame, text="View Longest Line", command=self.prayagLongest)
             applyButton.grid(row=2, column=0)
             self.wc_l(window, ipFrame, closeButton, applyButton)
 
         if(x==20): #change permissions
-            applyButton = Button(ipFrame, text="Change Permissions", command=self.prayag)
+            applyButton = Button(ipFrame, text="Change Permissions", command=self.prayagChange)
             applyButton.grid(row=2, column=0)
             self.chmod(window, ipFrame, closeButton, applyButton)
 
         if(x==21): #no. of files in directory
-            applyButton = Button(ipFrame, text="View No. of Files", command=self.prayag)
+            applyButton = Button(ipFrame, text="View No. of Files", command=self.prayagNoOfFiles)
             applyButton.grid(row=2, column=0)
             self.no_of_files(window, ipFrame, closeButton, applyButton)
 
         if(x==22): #compare two files
-            applyButton = Button(ipFrame, text="View Result", command=self.prayag)
+            applyButton = Button(ipFrame, text="View Result", command=self.prayagCompare)
             applyButton.grid(row=2, column=0)
             self.cmp(window, ipFrame, closeButton, applyButton)
 
         if(x==23): #compress file
-            applyButton = Button(ipFrame, text="Compress", command=self.prayag)
+            applyButton = Button(ipFrame, text="Compress", command=self.prayagCompress)
             applyButton.grid(row=2, column=0)
             self.gzip(window, ipFrame, closeButton, applyButton)
 
         if(x==24): #uncompress file
-            applyButton = Button(ipFrame, text="Uncompress", command=self.prayag)
+            applyButton = Button(ipFrame, text="Uncompress", command=self.prayagUncompress)
             applyButton.grid(row=2, column=0)
             self.ungzip(window, ipFrame, closeButton, applyButton)
 
         if(x==25): #check current permission status of files
-            applyButton = Button(ipFrame, text="Get Status", command=self.prayag)
+            applyButton = Button(ipFrame, text="Get Status", command=self.prayagCurrentPermission)
             applyButton.grid(row=2, column=0)
             self.ls_l(window, ipFrame, closeButton, applyButton)
 
         if(x==26): #rename file
-            applyButton = Button(ipFrame, text="Rename", command=self.prayag)
+            applyButton = Button(ipFrame, text="Rename", command=self.prayagRename)
             applyButton.grid(row=2, column=0)
             self.mv(window, ipFrame, closeButton, applyButton)
 
 
     # Dummy function for all onclick events where prayag's code should come
-    def prayag(self):
-        pass
+    def prayagCreateFile(self):
+        call(['touch',self.createFile.get()])
 
     def catcreatefile(self, window, ipFrame, closeButton, applyButton):
-
+        self.createFile=StringVar()
         l1 = Label(ipFrame, text="Enter name of file: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.createFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
@@ -411,6 +411,6 @@ class mainWindow:
 
 
 root = Tk()
-obj = mainWindow(root)
+obj = mainWindow(root),
 root.mainloop()
 
