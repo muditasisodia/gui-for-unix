@@ -32,7 +32,17 @@ class mainWindow:
         # Contents of headFrame
         dire = "C\:..."  # This is dummy text, how will we update the pwd? Ask Prayag
         pwd = Label(headFrame, text="Present Working Directory: " + dire)
-        pwd.pack()
+        pwd.grid(row=0,column=0)
+
+        cd = Label(headFrame,text="Change Directory to: ")
+        directoryName=Entry(headFrame)
+        cdButton = Button(headFrame, text="ENTER", command=self.prayag())
+
+        cd.grid(row=1,column=0)
+        directoryName.grid(row=1, column=1)
+        cdButton.grid(row=1, column=3)
+
+
 
         #Contents of Output frame
         op="output" #dummy
