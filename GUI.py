@@ -34,7 +34,7 @@ class mainWindow:
         # Contents of headFrame
         proc = subprocess.Popen ('pwd', stdout=subprocess.PIPE)
         output = proc.stdout.read ().strip ()
-        dire = output  
+        dire = output
         pwd = Label(headFrame, text="Present Working Directory: " + str(dire))
         pwd.grid(row=0,column=0)
 
@@ -244,6 +244,48 @@ class mainWindow:
     def prayagClear(self):
         pass
 
+    def prayagFileContent(self):
+        pass
+
+    def prayagFirstTen(self):
+        pass
+
+    def prayagLastTen(self):
+        pass
+
+    def prayagCopy(self):
+        pass
+
+    def prayagSortAsce(self):
+        pass
+
+    def prayagWc(self):
+        pass
+
+    def prayagLongest(self):
+        pass
+
+    def prayagChange(self):
+        pass
+
+    def prayagNoOfFiles(self):
+        pass
+
+    def prayagCompare(self):
+        pass
+
+    def prayagCompress(self):
+        pass
+
+    def prayagUncompress(self):
+        pass
+
+    def prayagCurrentPermission(self):
+        pass
+
+    def prayagRename(self):
+        pass
+    
     def catcreatefile(self, window, ipFrame, closeButton, applyButton):
         self.createFile=StringVar()
         l1 = Label(ipFrame, text="Enter name of file: ")
