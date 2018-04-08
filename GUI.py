@@ -6,6 +6,8 @@
 
 from tkinter import *
 from subprocess import call
+import subprocess
+import os
 
 class mainWindow:
     def __init__(self, root):
@@ -30,13 +32,16 @@ class mainWindow:
         outputFrame.grid(rowspan=5, columnspan=3)
 
         # Contents of headFrame
-        dire = "C\:..."  # This is dummy text, how will we update the pwd? Ask Prayag
-        pwd = Label(headFrame, text="Present Working Directory: " + dire)
+        proc = subprocess.Popen ('pwd', stdout=subprocess.PIPE)
+        output = proc.stdout.read ().strip ()
+        dire = output  
+        pwd = Label(headFrame, text="Present Working Directory: " + str(dire))
         pwd.grid(row=0,column=0)
 
         cd = Label(headFrame,text="Change Directory to: ")
-        directoryName=Entry(headFrame)
-        cdButton = Button(headFrame, text="ENTER", command=self.prayag())
+        self.changeDirectory=StringVar()
+        directoryName=Entry(headFrame,textvariable=self.changeDirectory)
+        cdButton = Button(headFrame, text="ENTER", command=self.prayagChangeDirectory)
 
         cd.grid(row=1,column=0)
         directoryName.grid(row=1, column=1)
@@ -49,7 +54,7 @@ class mainWindow:
         output=Label(outputFrame,text="Output: " + op)
         output.pack()
         # Contents of createFrame
-        clearButton = Button(outputFrame, text="Clear", command=self.prayag())
+        clearButton = Button(outputFrame, text="Clear", command=self.prayagClear())
         clearButton.pack()
 
         l1 = Label(createFrame, text="Creation and Deletion")
@@ -220,8 +225,24 @@ class mainWindow:
 
 
     # Dummy function for all onclick events where prayag's code should come
+
+    def prayagChangeDirectory(self):
+        os.chdir(self.changeDirectory.get())
+
     def prayagCreateFile(self):
-        call(['touch',self.createFile.get()])
+        call(["touch",self.createFile.get()])
+
+    def prayagMkdir(self):
+        call(["mkdir",self.makeDirectory.get()])
+
+    def prayagRm(self):
+        call(["rm",self.removeFile.get()])
+
+    def prayagRmr(self):
+        call(["rm","-r",self.removeDirectory.get()])
+
+    def prayagClear(self):
+        pass
 
     def catcreatefile(self, window, ipFrame, closeButton, applyButton):
         self.createFile=StringVar()
@@ -232,32 +253,35 @@ class mainWindow:
         fileName.grid(row=0, column=1)
 
     def mkdir(self, window, ipFrame, closeButton, applyButton):
-
+        self.makeDirectory=StringVar()
         l1 = Label(ipFrame, text="Enter directory name: ")
-        dirName = Entry(ipFrame)
+        dirName = Entry(ipFrame,textvariable=self.makeDirectory)
 
         l1.grid(row=0, column=0)
         dirName.grid(row=0, column=1)
 
     def rm(self, window, ipFrame,closeButton, applyButton ):
+        self.removeFile = StringVar ()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.removeFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
 
     def rm_r(self, window, ipFrame, closeButton, applyButton):
+        self.removeDirectory = StringVar ()
         l1 = Label(ipFrame, text="Enter directory name: ")
-        dirName = Entry(ipFrame)
+        dirName = Entry(ipFrame,textvariable=self.removeDirectory)
 
         l1.grid(row=0, column=0)
         dirName.grid(row=0, column=1)
 
 
     def whoami(self, outputFrame):
-        username = ".sh functionality, // prayag"
-        l1 = Label(outputFrame, text="Username: " + username)
+        whoAmI = subprocess.Popen ('whoami', stdout=subprocess.PIPE)
+        username = whoAmI.stdout.read ().strip ()
+        l1 = Label(outputFrame, text="Username: " + str(username))
         l1.pack()
 
     def free(self, outputFrame): #memory deets in bytes
