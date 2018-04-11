@@ -32,11 +32,12 @@ class mainWindow:
         outputFrame.grid(rowspan=5, columnspan=3)
 
         # Contents of headFrame
+        self.pwd1=StringVar()
         proc = subprocess.Popen ('pwd', stdout=subprocess.PIPE)
         output = proc.stdout.read ().strip ()
         dire = output
-        pwd = Label(headFrame, text="Present Working Directory: " + str(dire))
-        pwd.grid(row=0,column=0)
+        self.pwd = Label(headFrame, text="Present Working Directory: " + str(dire),textvariable=self.pwd1)
+        self.pwd.grid(row=0,column=0)
 
         cd = Label(headFrame,text="Change Directory to: ")
         self.changeDirectory=StringVar()
@@ -228,6 +229,7 @@ class mainWindow:
 
     def prayagChangeDirectory(self):
         os.chdir(self.changeDirectory.get())
+        self.pwd1.set("The Present Working Directory is: "+self.changeDirectory.get())
 
     def prayagCreateFile(self):
         call(["touch",self.createFile.get()])
@@ -242,6 +244,7 @@ class mainWindow:
         call(["rm","-r",self.removeDirectory.get()])
 
     def prayagClear(self):
+
         pass
 
     def prayagFileContent(self):
@@ -285,7 +288,7 @@ class mainWindow:
 
     def prayagRename(self):
         pass
-    
+
     def catcreatefile(self, window, ipFrame, closeButton, applyButton):
         self.createFile=StringVar()
         l1 = Label(ipFrame, text="Enter name of file: ")
@@ -327,33 +330,44 @@ class mainWindow:
         l1.pack()
 
     def free(self, outputFrame): #memory deets in bytes
-        details = ".sh func// prayag"
-        l1 = Label(outputFrame, text="Memory Status: " + details)
+        free = subprocess.Popen('free', stdout=subprocess.PIPE)
+        details = free.stdout.read ().strip ()
+        l1 = Text(outputFrame,height=10,width=100)
+        l1.insert(END, details)
         l1.pack()
 
     def free_g(self, outputFrame): #memory deets in GB
-        details = ".sh func// prayag"
-        l1 = Label(outputFrame, text="Memory Status: " + details)
+        proc="free -g"
+        free = subprocess.Popen(proc, stdout=subprocess.PIPE)
+        details = free.stdout.read ().strip ()
+        l1 = Text(outputFrame,height=10,width=100)
+        l1.insert(END, details)
         l1.pack()
 
     def df_k(self, outputFrame): #disk usage by file system
-        usage = ".sh // prayag"
-        l1 = Label(outputFrame, text = "Disk Usage:  " + usage)
+        proc="df -k"
+        free = subprocess.Popen(proc, stdout=subprocess.PIPE,shell=True)
+        usage = free.stdout.read ().strip ()
+        l1 = Text(outputFrame,height=10,width=100)
+        l1.insert(END, usage)
         l1.pack()
 
     def uname_a(self,outputFrame): #system information
-        information = ".sh//prayag"
-        l1 = Label(outputFrame, text = "System Information: " + information)
+        proc="uname -a"
+        free = subprocess.Popen(proc, stdout=subprocess.PIPE,shell=True)
+        information = free.stdout.read ().strip ()
+        l1 = Label(outputFrame, text = "System Information: " + str(information))
         l1.pack()
 
     def uptime(self,outputFrame): #runtime information
-        runningTime = ".sh//prayag"
-        l1 = Label(outputFrame, text="System Activity Time Duration: " + runningTime)
+        free = subprocess.Popen('uptime', stdout=subprocess.PIPE)
+        runningTime = free.stdout.read ().strip ()
+        l1 = Label(outputFrame, text="System Activity Time Duration: " + str(runningTime))
         l1.pack()
 
-    def gnome(self,outputFrame): #calculator
-        l1 = Label(outputFrame, text="Calculator Opened")
-        l1.pack()
+    # def gnome(self,outputFrame): #calculator
+    #     l1 = Label(outputFrame, text="Calculator Opened")
+    #     l1.pack()
 
     def catfilecontent(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter file name: ")
@@ -363,8 +377,10 @@ class mainWindow:
         fileName.grid(row=0, column=1)
 
     def ls(self,outputFrame): #ls for pwd
-        list = ".sh// prayag"
-        l1 = Label(outputFrame, text="Contents: " + list)
+        Ls = subprocess.Popen ('ls', stdout=subprocess.PIPE)
+        list = Ls.stdout.read ().strip ()
+        l1 = Text(outputFrame,height=10,width=100)
+        l1.insert(END, list)
         l1.pack()
 
 
