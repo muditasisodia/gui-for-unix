@@ -9,6 +9,7 @@ from subprocess import call
 import subprocess
 import os
 
+
 class mainWindow:
     def __init__(self, root):
 
@@ -21,7 +22,7 @@ class mainWindow:
         utilityFrame = Frame(root, bg="green")
         funcFrame1 = Frame(root, bg="yellow")
         funcFrame2 = Frame(root, bg="purple")
-        outputFrame=Frame(root, bg="black")
+        outputFrame = Frame(root, bg="black")
 
         # Disaplying frames
         headFrame.grid(row=0, columnspan=3)
@@ -32,27 +33,25 @@ class mainWindow:
         outputFrame.grid(rowspan=5, columnspan=3)
 
         # Contents of headFrame
-        self.pwd1=StringVar()
-        proc = subprocess.Popen ('pwd', stdout=subprocess.PIPE)
-        output = proc.stdout.read ().strip ()
+        self.pwd1 = StringVar()
+        proc = subprocess.Popen('pwd', stdout=subprocess.PIPE)
+        output = proc.stdout.read().strip()
         dire = output
-        self.pwd = Label(headFrame, text="Present Working Directory: " + str(dire),textvariable=self.pwd1)
-        self.pwd.grid(row=0,column=0)
+        self.pwd = Label(headFrame, text="Present Working Directory: " + str(dire), textvariable=self.pwd1)
+        self.pwd.grid(row=0, column=0)
 
-        cd = Label(headFrame,text="Change Directory to: ")
-        self.changeDirectory=StringVar()
-        directoryName=Entry(headFrame,textvariable=self.changeDirectory)
+        cd = Label(headFrame, text="Change Directory to: ")
+        self.changeDirectory = StringVar()
+        directoryName = Entry(headFrame, textvariable=self.changeDirectory)
         cdButton = Button(headFrame, text="ENTER", command=self.prayagChangeDirectory)
 
-        cd.grid(row=1,column=0)
+        cd.grid(row=1, column=0)
         directoryName.grid(row=1, column=1)
         cdButton.grid(row=1, column=3)
 
-
-
-        #Contents of Output frame
-        op="output" #dummy
-        output=Label(outputFrame,text="Output: " + op)
+        # Contents of Output frame
+        op = "output"  # dummy
+        output = Label(outputFrame, text="Output: " + op)
         output.pack()
         # Contents of createFrame
         clearButton = Button(outputFrame, text="Clear", command=self.prayagClear())
@@ -72,11 +71,11 @@ class mainWindow:
         # Contents of utilityFrame
         l2 = Label(utilityFrame, text="Utility Functions: ")
         b5 = Button(utilityFrame, text="Username", command=lambda: self.whoami(outputFrame))
-        b6 = Button(utilityFrame, text="Memory Status", command=lambda : self.free(outputFrame))
+        b6 = Button(utilityFrame, text="Memory Status", command=lambda: self.free(outputFrame))
         b7 = Button(utilityFrame, text="RAM", command=lambda: self.free_g(outputFrame))
-        b8 = Button(utilityFrame, text="Disk Usage by File System", command= lambda: self.df_k(outputFrame))
+        b8 = Button(utilityFrame, text="Disk Usage by File System", command=lambda: self.df_k(outputFrame))
         b9 = Button(utilityFrame, text="System Information", command=lambda: self.uname_a(outputFrame))
-        b10 = Button(utilityFrame, text="Time Duration of System Activity", command= lambda: self.uptime(outputFrame))
+        b10 = Button(utilityFrame, text="Time Duration of System Activity", command=lambda: self.uptime(outputFrame))
         b11 = Button(utilityFrame, text="Calculator", command=lambda: self.gnome(outputFrame))
         l2.grid(row=0)
         b5.grid(row=1)
@@ -91,10 +90,10 @@ class mainWindow:
         l3 = Label(funcFrame1, text="Functions on Files: ")
         b12 = Button(funcFrame1, text="View Contents", command=lambda: self.create_window(12))
         b13 = Button(funcFrame1, text="List Files", command=lambda: self.ls(outputFrame))
-        b14 = Button(funcFrame1, text="View First 10 Lines", command=lambda : self.create_window(14))
-        b15 = Button(funcFrame1, text="View Last 10 Lines", command=lambda : self.create_window(15))
+        b14 = Button(funcFrame1, text="View First 10 Lines", command=lambda: self.create_window(14))
+        b15 = Button(funcFrame1, text="View Last 10 Lines", command=lambda: self.create_window(15))
         b16 = Button(funcFrame1, text="Copy File", command=lambda: self.create_window(16))
-        b17 = Button(funcFrame1, text="Sort", command=lambda : self.create_window(17))
+        b17 = Button(funcFrame1, text="Sort", command=lambda: self.create_window(17))
         b18 = Button(funcFrame1, text="Give Word, Line, Character Count", command=lambda: self.create_window(18))
         l3.grid(row=0, columnspan=2)
         b12.grid(row=1)
@@ -106,14 +105,14 @@ class mainWindow:
         b18.grid(row=7)
 
         # Contents of funcFrame2
-        b19 = Button(funcFrame2, text="Give Longest Line", command= lambda: self.create_window(19) )
-        b20 = Button(funcFrame2, text="Change Permissions", command= lambda: self.create_window(20))
+        b19 = Button(funcFrame2, text="Give Longest Line", command=lambda: self.create_window(19))
+        b20 = Button(funcFrame2, text="Change Permissions", command=lambda: self.create_window(20))
         b21 = Button(funcFrame2, text="No. of Files", command=lambda: self.create_window(21))
         b22 = Button(funcFrame2, text="Compare two files", command=lambda: self.create_window(22))
         b23 = Button(funcFrame2, text="Compress File", command=lambda: self.create_window(23))
-        b24 = Button(funcFrame2, text="Uncompress Files", command=lambda : self.create_window(24))
-        b25 = Button(funcFrame2, text="Check Current Permissions", command=lambda: self.create_window(25) )
-        b26 = Button(funcFrame2, text="Rename", command=lambda: self.create_window(26) )
+        b24 = Button(funcFrame2, text="Uncompress Files", command=lambda: self.create_window(24))
+        b25 = Button(funcFrame2, text="Check Current Permissions", command=lambda: self.create_window(25))
+        b26 = Button(funcFrame2, text="Rename", command=lambda: self.create_window(26))
         b19.grid(row=0)
         b20.grid(row=1)
         b21.grid(row=2)
@@ -134,234 +133,245 @@ class mainWindow:
         # find maximum number of inputs from all commands and decide row number
         closeButton.grid(row=2, column=1)
 
-        if (x == 1): #createfile
+        if (x == 1):  # createfile
             applyButton = Button(ipFrame, text="Create", command=self.prayagCreateFile)
             applyButton.grid(row=2, column=0)
             self.catcreatefile(window, ipFrame, closeButton, applyButton)
 
-        if (x == 2): #mkdir
+        if (x == 2):  # mkdir
             applyButton = Button(ipFrame, text="Apply", command=self.prayagMkdir)
             applyButton.grid(row=2, column=0)
             self.mkdir(window, ipFrame, closeButton, applyButton)
 
-        if(x ==3 ): #rm
+        if (x == 3):  # rm
             applyButton = Button(ipFrame, text="Delete", command=self.prayagRm)
-            applyButton.grid(row=2,column=0)
+            applyButton.grid(row=2, column=0)
             self.rm(window, ipFrame, closeButton, applyButton)
 
-        if(x == 4): #rmr
+        if (x == 4):  # rmr
             applyButton = Button(ipFrame, text="Delete", command=self.prayagRmr)
             applyButton.grid(row=2, column=0)
             self.rm_r(window, ipFrame, closeButton, applyButton)
 
-        if(x==12): #View catfilecontent
-            applyButton = Button(ipFrame, text="View Content", command=self.prayagFileContent)
+        if (x == 12):  # View catfilecontent
+            applyButton = Button(ipFrame, text="View Content", command=lambda: self.prayagFileContent(ipFrame))
             applyButton.grid(row=2, column=0)
             self.catfilecontent(window, ipFrame, closeButton, applyButton)
 
-        if(x==14): #head i.e. first 10 lines
-            applyButton = Button(ipFrame, text="View lines", command=self.prayagFirstTen)
+        if (x == 14):  # head i.e. first 10 lines
+            applyButton = Button(ipFrame, text="View lines", command=lambda: self.prayagFirstTen(ipFrame))
             applyButton.grid(row=2, column=0)
             self.head(window, ipFrame, closeButton, applyButton)
 
-        if(x==15): #tail i.e. last 10 lines
-            applyButton = Button(ipFrame, text="View lines", command=self.prayagLastTen)
+        if (x == 15):  # tail i.e. last 10 lines
+            applyButton = Button(ipFrame, text="View lines", command=lambda: self.prayagLastTen(ipFrame))
             applyButton.grid(row=2, column=0)
             self.tail(window, ipFrame, closeButton, applyButton)
 
-        if(x==16): #copy
-            applyButton = Button(ipFrame, text="Copy", command=self.prayagCopy)
+        if (x == 16):  # copy
+            applyButton = Button(ipFrame, text="Copy", command=lambda: self.prayagCopy(ipFrame))
             applyButton.grid(row=2, column=0)
             self.copy(window, ipFrame, closeButton, applyButton)
 
-        if(x==17): #sort in ascending order
-            applyButton = Button(ipFrame, text="Sort", command=self.prayagSortAsce)
+        if (x == 17):  # sort in ascending order
+            applyButton = Button(ipFrame, text="Sort", command=lambda: self.prayagSortAsce(ipFrame))
             applyButton.grid(row=2, column=0)
             self.sort(window, ipFrame, closeButton, applyButton)
 
-        if(x==18): #wc
-            applyButton = Button(ipFrame, text="View Count", command=self.prayagWc)
+        if (x == 18):  # wc
+            applyButton = Button(ipFrame, text="View Count", command=lambda: self.prayagWc(ipFrame))
             applyButton.grid(row=2, column=0)
             self.wc(window, ipFrame, closeButton, applyButton)
 
-        if(x==19): #longest line
-            applyButton = Button(ipFrame, text="View Longest Line", command=self.prayagLongest)
+        if (x == 19):  # longest line
+            applyButton = Button(ipFrame, text="View Longest Line", command=lambda: self.prayagLongest(ipFrame))
             applyButton.grid(row=2, column=0)
             self.wc_l(window, ipFrame, closeButton, applyButton)
 
-        if(x==20): #change permissions
-            applyButton = Button(ipFrame, text="Change Permissions", command=self.prayagChange)
+        if (x == 20):  # change permissions
+            applyButton = Button(ipFrame, text="Change Permissions", command=lambda: self.prayagChange(ipFrame))
             applyButton.grid(row=2, column=0)
             self.chmod(window, ipFrame, closeButton, applyButton)
 
-        if(x==21): #no. of files in directory
-            applyButton = Button(ipFrame, text="View No. of Files", command=self.prayagNoOfFiles)
+        if (x == 21):  # no. of files in directory
+            applyButton = Button(ipFrame, text="View No. of Files", command=lambda: self.prayagNoOfFiles(ipFrame))
             applyButton.grid(row=2, column=0)
             self.no_of_files(window, ipFrame, closeButton, applyButton)
 
-        if(x==22): #compare two files
-            applyButton = Button(ipFrame, text="View Result", command=self.prayagCompare)
+        if (x == 22):  # compare two files
+            applyButton = Button(ipFrame, text="View Result", command=lambda: self.prayagCompare(ipFrame))
             applyButton.grid(row=2, column=0)
             self.cmp(window, ipFrame, closeButton, applyButton)
 
-        if(x==23): #compress file
-            applyButton = Button(ipFrame, text="Compress", command=self.prayagCompress)
+        if (x == 23):  # compress file
+            applyButton = Button(ipFrame, text="Compress", command=lambda: self.prayagCompress(ipFrame))
             applyButton.grid(row=2, column=0)
             self.gzip(window, ipFrame, closeButton, applyButton)
 
-        if(x==24): #uncompress file
-            applyButton = Button(ipFrame, text="Uncompress", command=self.prayagUncompress)
+        if (x == 24):  # uncompress file
+            applyButton = Button(ipFrame, text="Uncompress", command=lambda: self.prayagUncompress(ipFrame))
             applyButton.grid(row=2, column=0)
             self.ungzip(window, ipFrame, closeButton, applyButton)
 
-        if(x==25): #check current permission status of files
-            applyButton = Button(ipFrame, text="Get Status", command=self.prayagCurrentPermission)
+        if (x == 25):  # check current permission status of files
+            applyButton = Button(ipFrame, text="Get Status", command=lambda: self.prayagCurrentPermission(ipFrame))
             applyButton.grid(row=2, column=0)
             self.ls_l(window, ipFrame, closeButton, applyButton)
 
-        if(x==26): #rename file
-            applyButton = Button(ipFrame, text="Rename", command=self.prayagRename)
+        if (x == 26):  # rename file
+            applyButton = Button(ipFrame, text="Rename", command=lambda: self.prayagRename(ipFrame))
             applyButton.grid(row=2, column=0)
             self.mv(window, ipFrame, closeButton, applyButton)
-
 
     # Dummy function for all onclick events where prayag's code should come
 
     def prayagChangeDirectory(self):
         os.chdir(self.changeDirectory.get())
-        self.pwd1.set("The Present Working Directory is: "+self.changeDirectory.get())
+        self.pwd1.set("The Present Working Directory is: " + self.changeDirectory.get())
 
     def prayagCreateFile(self):
-        call(["touch",self.createFile.get()])
+        call(["touch", self.createFile.get()])
 
     def prayagMkdir(self):
-        call(["mkdir",self.makeDirectory.get()])
+        call(["mkdir", self.makeDirectory.get()])
 
     def prayagRm(self):
-        call(["rm",self.removeFile.get()])
+        call(["rm", self.removeFile.get()])
 
     def prayagRmr(self):
-        call(["rm","-r",self.removeDirectory.get()])
+        call(["rm", "-r", self.removeDirectory.get()])
 
     def prayagClear(self):
 
         pass
 
-    def prayagFileContent(self):
-        pass
+    def prayagFileContent(self, ipFrame):
+        l1 = Label(ipFrame, text="works")
+        l1.grid(row=5)
 
-    def prayagFirstTen(self):
-        pass
+    def prayagFirstTen(self, ipFrame):
+        l1 = Label(ipFrame, text="works")
+        l1.grid(row=5)
 
-    def prayagLastTen(self):
-        pass
+    def prayagLastTen(self, ipFrame):
+        l1 = Label(ipFrame, text="works")
+        l1.grid(row=5)
 
-    def prayagCopy(self):
-        pass
+    def prayagCopy(self, ipFrame):
+        l1 = Label(ipFrame, text="Content Copied")
+        l1.grid(row=5)
 
-    def prayagSortAsce(self):
-        pass
+    def prayagSortAsce(self, ipFrame):
+        l1 = Label(ipFrame, text="Sorted")
+        l1.grid(row=5)
 
-    def prayagWc(self):
-        pass
+    def prayagWc(self, ipFrame):
+        l1 = Label(ipFrame, text="Count: ")
+        l1.grid(row=5)
 
-    def prayagLongest(self):
-        pass
+    def prayagLongest(self, ipFrame):
+        l1 = Label(ipFrame, text="Longest Line: ")
+        l1.grid(row=5)
 
-    def prayagChange(self):
-        pass
+    def prayagChange(self, ipFrame):
+        l1 = Label(ipFrame, text="Changed Permissions Successfully.")
+        l1.grid(row=5)
 
-    def prayagNoOfFiles(self):
-        pass
+    def prayagNoOfFiles(self, ipFrame):
+        l1 = Label(ipFrame, text="Count: ")
+        l1.grid(row=5)
 
-    def prayagCompare(self):
-        pass
+    def prayagCompare(self, ipFrame):
+        l1 = Label(ipFrame, text="Result:  ")
+        l1.grid(row=5)
 
-    def prayagCompress(self):
-        pass
+    def prayagCompress(self, ipFrame):
+        l1 = Label(ipFrame, text="File Compressed. ")
+        l1.grid(row=5)
 
-    def prayagUncompress(self):
-        pass
+    def prayagUncompress(self, ipFrame):
+        l1 = Label(ipFrame, text="File Uncompressed. ")
+        l1.grid(row=5)
 
-    def prayagCurrentPermission(self):
-        pass
+    def prayagCurrentPermission(self, ipFrame):
+        l1 = Label(ipFrame, text="Permissions: ")
+        l1.grid(row=5)
 
-    def prayagRename(self):
-        pass
+    def prayagRename(self, ipFrame):
+        l1 = Label(ipFrame, text="File Renamed. ")
+        l1.grid(row=5)
 
     def catcreatefile(self, window, ipFrame, closeButton, applyButton):
-        self.createFile=StringVar()
+        self.createFile = StringVar()
         l1 = Label(ipFrame, text="Enter name of file: ")
-        fileName = Entry(ipFrame,textvariable=self.createFile)
+        fileName = Entry(ipFrame, textvariable=self.createFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def mkdir(self, window, ipFrame, closeButton, applyButton):
-        self.makeDirectory=StringVar()
+        self.makeDirectory = StringVar()
         l1 = Label(ipFrame, text="Enter directory name: ")
-        dirName = Entry(ipFrame,textvariable=self.makeDirectory)
+        dirName = Entry(ipFrame, textvariable=self.makeDirectory)
 
         l1.grid(row=0, column=0)
         dirName.grid(row=0, column=1)
 
-    def rm(self, window, ipFrame,closeButton, applyButton ):
-        self.removeFile = StringVar ()
+    def rm(self, window, ipFrame, closeButton, applyButton):
+        self.removeFile = StringVar()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame,textvariable=self.removeFile)
+        fileName = Entry(ipFrame, textvariable=self.removeFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-
     def rm_r(self, window, ipFrame, closeButton, applyButton):
-        self.removeDirectory = StringVar ()
+        self.removeDirectory = StringVar()
         l1 = Label(ipFrame, text="Enter directory name: ")
-        dirName = Entry(ipFrame,textvariable=self.removeDirectory)
+        dirName = Entry(ipFrame, textvariable=self.removeDirectory)
 
         l1.grid(row=0, column=0)
         dirName.grid(row=0, column=1)
 
-
     def whoami(self, outputFrame):
-        whoAmI = subprocess.Popen ('whoami', stdout=subprocess.PIPE)
-        username = whoAmI.stdout.read ().strip ()
+        whoAmI = subprocess.Popen('whoami', stdout=subprocess.PIPE)
+        username = whoAmI.stdout.read().strip()
         l1 = Label(outputFrame, text="Username: " + str(username))
         l1.pack()
 
-    def free(self, outputFrame): #memory deets in bytes
+    def free(self, outputFrame):  # memory deets in bytes
         free = subprocess.Popen('free', stdout=subprocess.PIPE)
-        details = free.stdout.read ().strip ()
-        l1 = Text(outputFrame,height=10,width=100)
+        details = free.stdout.read().strip()
+        l1 = Text(outputFrame, height=10, width=100)
         l1.insert(END, details)
         l1.pack()
 
-    def free_g(self, outputFrame): #memory deets in GB
-        proc="free -g"
+    def free_g(self, outputFrame):  # memory deets in GB
+        proc = "free -g"
         free = subprocess.Popen(proc, stdout=subprocess.PIPE)
-        details = free.stdout.read ().strip ()
-        l1 = Text(outputFrame,height=10,width=100)
+        details = free.stdout.read().strip()
+        l1 = Text(outputFrame, height=10, width=100)
         l1.insert(END, details)
         l1.pack()
 
-    def df_k(self, outputFrame): #disk usage by file system
-        proc="df -k"
-        free = subprocess.Popen(proc, stdout=subprocess.PIPE,shell=True)
-        usage = free.stdout.read ().strip ()
-        l1 = Text(outputFrame,height=10,width=100)
+    def df_k(self, outputFrame):  # disk usage by file system
+        proc = "df -k"
+        free = subprocess.Popen(proc, stdout=subprocess.PIPE, shell=True)
+        usage = free.stdout.read().strip()
+        l1 = Text(outputFrame, height=10, width=100)
         l1.insert(END, usage)
         l1.pack()
 
-    def uname_a(self,outputFrame): #system information
-        proc="uname -a"
-        free = subprocess.Popen(proc, stdout=subprocess.PIPE,shell=True)
-        information = free.stdout.read ().strip ()
-        l1 = Label(outputFrame, text = "System Information: " + str(information))
+    def uname_a(self, outputFrame):  # system information
+        proc = "uname -a"
+        free = subprocess.Popen(proc, stdout=subprocess.PIPE, shell=True)
+        information = free.stdout.read().strip()
+        l1 = Label(outputFrame, text="System Information: " + str(information))
         l1.pack()
 
-    def uptime(self,outputFrame): #runtime information
+    def uptime(self, outputFrame):  # runtime information
         free = subprocess.Popen('uptime', stdout=subprocess.PIPE)
-        runningTime = free.stdout.read ().strip ()
+        runningTime = free.stdout.read().strip()
         l1 = Label(outputFrame, text="System Activity Time Duration: " + str(runningTime))
         l1.pack()
 
@@ -376,22 +386,21 @@ class mainWindow:
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def ls(self,outputFrame): #ls for pwd
-        Ls = subprocess.Popen ('ls', stdout=subprocess.PIPE)
-        list = Ls.stdout.read ().strip ()
-        l1 = Text(outputFrame,height=10,width=100)
+    def ls(self, outputFrame):  # ls for pwd
+        Ls = subprocess.Popen('ls', stdout=subprocess.PIPE)
+        list = Ls.stdout.read().strip()
+        l1 = Text(outputFrame, height=10, width=100)
         l1.insert(END, list)
         l1.pack()
 
-
-    def head(self,window, ipFrame, closeButton, applyButton):
+    def head(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter file name: ")
         fileName = Entry(ipFrame)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def tail(self,window, ipFrame, closeButton, applyButton):
+    def tail(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter file name: ")
         fileName = Entry(ipFrame)
 
@@ -410,44 +419,43 @@ class mainWindow:
         l2.grid(row=1, column=0)
         fileName2.grid(row=1, column=1)
 
-
     def sort(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter File Name:  ")
         fileName = Entry(ipFrame)
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def wc(self,window, ipFrame, closeButton, applyButton):
+    def wc(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter File Name:  ")
         fileName = Entry(ipFrame)
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def wc_l(self,window, ipFrame, closeButton, applyButton):
+    def wc_l(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter File Name:  ")
         fileName = Entry(ipFrame)
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def chmod(self,window, ipFrame, closeButton, applyButton):
+    def chmod(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter File Name:  ")
         fileName = Entry(ipFrame)
 
-        l2=Label(ipFrame, text="USER: ")
+        l2 = Label(ipFrame, text="USER: ")
         user = Entry(ipFrame)
-        l3=Label(ipFrame, text="GROUP: ")
+        l3 = Label(ipFrame, text="GROUP: ")
         group = Entry(ipFrame)
-        l4=Label(ipFrame, text="OTHERS: ")
+        l4 = Label(ipFrame, text="OTHERS: ")
         others = Entry(ipFrame)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
-        l2.grid(row=1,column=0)
-        user.grid(row=1,column=1)
-        l3.grid(row=1,column=2)
-        group.grid(row=1,column=3)
-        l4.grid(row=1,column=4)
-        others.grid(row=1,column=5)
+        l2.grid(row=1, column=0)
+        user.grid(row=1, column=1)
+        l3.grid(row=1, column=2)
+        group.grid(row=1, column=3)
+        l4.grid(row=1, column=4)
+        others.grid(row=1, column=5)
 
     def no_of_files(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter directory name: ")
@@ -468,21 +476,21 @@ class mainWindow:
         l2.grid(row=1, column=0)
         fileName2.grid(row=1, column=1)
 
-    def gzip(self,window, ipFrame, closeButton, applyButton):
+    def gzip(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter file name: ")
         fileName = Entry(ipFrame)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def ungzip(self,window, ipFrame, closeButton, applyButton):
+    def ungzip(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter file name: ")
         fileName = Entry(ipFrame)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
-    def ls_l(self,window, ipFrame, closeButton, applyButton):
+    def ls_l(self, window, ipFrame, closeButton, applyButton):
         l1 = Label(ipFrame, text="Enter file name: ")
         fileName = Entry(ipFrame)
 
