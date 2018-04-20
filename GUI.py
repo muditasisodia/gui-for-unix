@@ -246,34 +246,52 @@ class mainWindow:
         pass
 
     def prayagFileContent(self, ipFrame):
-        l1 = Label(ipFrame, text="works")
+        call ([ "open", self.catfile.get()])
+        l1 = Label(ipFrame, text="Opened")
         l1.grid(row=5)
 
     def prayagFirstTen(self, ipFrame):
-        l1 = Label(ipFrame, text="works")
+        proc="head -10 "+self.first.get()
+        free = subprocess.Popen (proc, stdout=subprocess.PIPE, shell=True)
+        details = free.stdout.read ().strip ()
+        l1 = Label(ipFrame, text=details)
         l1.grid(row=5)
 
     def prayagLastTen(self, ipFrame):
-        l1 = Label(ipFrame, text="works")
+        proc="tail -10 "+self.last.get()
+        free = subprocess.Popen (proc, stdout=subprocess.PIPE, shell=True)
+        details = free.stdout.read ().strip ()
+        l1 = Label(ipFrame, text=details)
         l1.grid(row=5)
 
     def prayagCopy(self, ipFrame):
+        call ("cat "+self.oneFile.get()+" >> "+self.twoFile.get(), shell=True)
         l1 = Label(ipFrame, text="Content Copied")
         l1.grid(row=5)
 
     def prayagSortAsce(self, ipFrame):
+        call ([ "sort", self.sortFile.get()])
         l1 = Label(ipFrame, text="Sorted")
         l1.grid(row=5)
 
     def prayagWc(self, ipFrame):
-        l1 = Label(ipFrame, text="Count: ")
+        proc="wc "+self.wordCount.get()
+        free = subprocess.Popen (proc, stdout=subprocess.PIPE, shell=True)
+        details = free.stdout.read ().strip ()
+        l1 =Text(ipFrame,height=10,width=50)
+        l1.insert(END, details)
         l1.grid(row=5)
 
     def prayagLongest(self, ipFrame):
-        l1 = Label(ipFrame, text="Longest Line: ")
+        proc="wc -l "+self.wordCountLongest.get()
+        free = subprocess.Popen (proc, stdout=subprocess.PIPE, shell=True)
+        details = free.stdout.read ().strip ()
+        l1 =Text(ipFrame,height=10,width=50)
+        l1.insert(END, details)
         l1.grid(row=5)
 
     def prayagChange(self, ipFrame):
+        call("chmod "+self.user.get()+self.group.get()+self.others.get()+" "+self.fileChmod.get(), shell=True)
         l1 = Label(ipFrame, text="Changed Permissions Successfully.")
         l1.grid(row=5)
 
@@ -282,22 +300,31 @@ class mainWindow:
         l1.grid(row=5)
 
     def prayagCompare(self, ipFrame):
-        l1 = Label(ipFrame, text="Result:  ")
+        proc="cmp "+self.fileOne.get()+" "+self.fileTwo.get()
+        free = subprocess.Popen (proc, stdout=subprocess.PIPE, shell=True)
+        details = free.stdout.read ().strip ()
+        l1 = Label(ipFrame, text="Result:  "+str(details))
         l1.grid(row=5)
 
     def prayagCompress(self, ipFrame):
+        call("gzip "+self.compressFile.get(), shell=True)
         l1 = Label(ipFrame, text="File Compressed. ")
         l1.grid(row=5)
 
     def prayagUncompress(self, ipFrame):
+        call ("gzip -d " + self.uncompressFile.get (), shell=True)
         l1 = Label(ipFrame, text="File Uncompressed. ")
         l1.grid(row=5)
 
     def prayagCurrentPermission(self, ipFrame):
-        l1 = Label(ipFrame, text="Permissions: ")
+        proc="ls -l "+self.currentFile.get()
+        free = subprocess.Popen (proc, stdout=subprocess.PIPE, shell=True)
+        details = free.stdout.read ().strip ()
+        l1 = Label(ipFrame, text="Permissions: "+str(details))
         l1.grid(row=5)
 
     def prayagRename(self, ipFrame):
+        call("mv "+self.oldFile.get()+" "+self.newFile.get(),shell=True)
         l1 = Label(ipFrame, text="File Renamed. ")
         l1.grid(row=5)
 
@@ -380,8 +407,9 @@ class mainWindow:
     #     l1.pack()
 
     def catfilecontent(self, window, ipFrame, closeButton, applyButton):
+        self.catfile=StringVar()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.catfile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
@@ -394,25 +422,29 @@ class mainWindow:
         l1.pack()
 
     def head(self, window, ipFrame, closeButton, applyButton):
+        self.first = StringVar ()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.first)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def tail(self, window, ipFrame, closeButton, applyButton):
+        self.last= StringVar ()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.last)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def copy(self, window, ipFrame, closeButton, applyButton):
+        self.oneFile=StringVar()
+        self.twoFile = StringVar ()
         l1 = Label(ipFrame, text="Copy from (file name): ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.oneFile)
 
         l2 = Label(ipFrame, text="Copy to (file name): ")
-        fileName2 = Entry(ipFrame)
+        fileName2 = Entry(ipFrame,textvariable=self.twoFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
@@ -420,33 +452,43 @@ class mainWindow:
         fileName2.grid(row=1, column=1)
 
     def sort(self, window, ipFrame, closeButton, applyButton):
+        self.sortFile=StringVar()
         l1 = Label(ipFrame, text="Enter File Name:  ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.sortFile)
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def wc(self, window, ipFrame, closeButton, applyButton):
+        self.wordCount = StringVar ()
         l1 = Label(ipFrame, text="Enter File Name:  ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.wordCount)
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def wc_l(self, window, ipFrame, closeButton, applyButton):
+        self.wordCountLongest = StringVar ()
         l1 = Label(ipFrame, text="Enter File Name:  ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.wordCountLongest)
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def chmod(self, window, ipFrame, closeButton, applyButton):
+
+        self.fileChmod=StringVar()
         l1 = Label(ipFrame, text="Enter File Name:  ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.fileChmod)
+
+        self.user=StringVar()
+        self.group = StringVar ()
+        self.others = StringVar ()
+
 
         l2 = Label(ipFrame, text="USER: ")
-        user = Entry(ipFrame)
+        user = Entry(ipFrame,textvariable=self.user)
         l3 = Label(ipFrame, text="GROUP: ")
-        group = Entry(ipFrame)
+        group = Entry(ipFrame,textvariable=self.group)
         l4 = Label(ipFrame, text="OTHERS: ")
-        others = Entry(ipFrame)
+        others = Entry(ipFrame,textvariable=self.others)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
@@ -465,11 +507,13 @@ class mainWindow:
         dirName.grid(row=0, column=1)
 
     def cmp(self, window, ipFrame, closeButton, applyButton):
+        self.fileOne=StringVar()
+        self.fileTwo = StringVar ()
         l1 = Label(ipFrame, text="Compare (file name): ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.fileOne)
 
         l2 = Label(ipFrame, text="with (file name): ")
-        fileName2 = Entry(ipFrame)
+        fileName2 = Entry(ipFrame,textvariable=self.fileTwo)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
@@ -477,32 +521,37 @@ class mainWindow:
         fileName2.grid(row=1, column=1)
 
     def gzip(self, window, ipFrame, closeButton, applyButton):
+        self.compressFile=StringVar()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.compressFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def ungzip(self, window, ipFrame, closeButton, applyButton):
-        l1 = Label(ipFrame, text="Enter file name: ")
+        self.uncompressFile = StringVar ()
+        l1 = Label(ipFrame, text="Enter file name: ",textvariable=self.uncompressFile)
         fileName = Entry(ipFrame)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def ls_l(self, window, ipFrame, closeButton, applyButton):
+        self.currentFile=StringVar()
         l1 = Label(ipFrame, text="Enter file name: ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.currentFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
 
     def mv(self, window, ipFrame, closeButton, applyButton):
+        self.oldFile=StringVar()
+        self.newFile=StringVar()
         l1 = Label(ipFrame, text="Change (file name): ")
-        fileName = Entry(ipFrame)
+        fileName = Entry(ipFrame,textvariable=self.oldFile)
 
         l2 = Label(ipFrame, text="to ( new file name): ")
-        fileName2 = Entry(ipFrame)
+        fileName2 = Entry(ipFrame,textvariable=self.newFile)
 
         l1.grid(row=0, column=0)
         fileName.grid(row=0, column=1)
